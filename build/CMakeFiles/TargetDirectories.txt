@@ -1,0 +1,2 @@
+/Users/lstranks/desktop/pempo/build/CMakeFiles/build_osxinj.dir
+/Users/lstranks/desktop/pempo/build/CMakeFiles/pempo.dir

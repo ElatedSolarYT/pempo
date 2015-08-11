@@ -1,0 +1,9 @@
+[submodule "ext/mach_override"]
+	path = ext/mach_override
+	url = https://github.com/rentzsch/mach_override.git
+[submodule "ext/osxinj"]
+	path = ext/osxinj
+	url = https://github.com/scen/osxinj
+[submodule "ext/mach_inject"]
+	path = ext/mach_inject
+	url = https://github.com/rentzsch/mach_inject.git
