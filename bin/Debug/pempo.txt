@@ -1,2 +1,0 @@
-TestLib.dll
-TestLib.Program:Main()
