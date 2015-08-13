@@ -2,6 +2,7 @@
 
 // Included header files
 
+#include <string>
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <mach/error.h>
