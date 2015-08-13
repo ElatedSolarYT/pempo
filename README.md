@@ -1,5 +1,7 @@
 # pempo
 
+```pempo``` is a Mac OS X game injector & hack tool. It uses [osxinj](https://github.com/scen/osxinj) to inject C/C++ dynamic library (.dylib) into a target process. The dynamic library [embeds Mono](http://www.mono-project.com/docs/advanced/embedding/) then loads a Mono library (.dll).
+
 How to:
 
 1. Determine architecture of target application (game or whatever)
