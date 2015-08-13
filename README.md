@@ -6,13 +6,10 @@ How to:
   1. Open up [Terminal](https://en.wikipedia.org/wiki/Terminal_(OS_X)).
   2. Enter command ```file PATH_TO_TARGET_APPLICATION```
   3. Take note of the output, you need this information for the next step.
-2. Build C++ bootstrap library ```pempo/Bootstrap/``` for target application architecture
-  * Change the CMake variable ```ARCHITECTURE``` in [CMakeLists.txt](Bootstrap/CMakeLists.txt) to match your target application. (i386 or x86_64)
-  * For information on how to build source code with CMake see [Running CMake](http://www.cmake.org/runningcmake/).
-  * Note: The CMake build will also build ```osxinj``` via XCode.
-3. Build Mono library ```pempo/MonoMagic```
-  * For information on building Mono source code for MacOS see [Xamarin:Mac:Installation:GettingStarted](http://developer.xamarin.com/guides/mac/getting_started/installation/)  
-  * Note: Could also build the mono library via [Visual Studio](https://www.visualstudio.com/vs-2015-product-editions) on Windows since all MacOS platform specific code is restricted to the C++ bootstrap. 
+2. Build ```pempo``` for target application architecture
+  * Change the CMake variable ```ARCHITECTURE``` in [CMakeLists.txt](CMakeLists.txt) to match your target application. (i386 or x86_64)
+  * For information on how to build with CMake see [Running CMake](http://www.cmake.org/runningcmake/).
+  * Note: The CMake build will also build ```osxinj``` via XCode and ```pempo/MonoLibrary``` via Mono. As such, XCode and Mono need to be installed; see [XCode in App Store](https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12) and [Install Mono on Mac OS X](http://www.mono-project.com/docs/getting-started/install/mac/) 
 4. Inject into target process
   1. Open up [Terminal](https://en.wikipedia.org/wiki/Terminal_(OS_X)).
   2. Change directory to the bin folder with the configuration you built for: ```cd pempo/bin/debug```
