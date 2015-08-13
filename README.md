@@ -7,7 +7,7 @@ How to:
   2. Enter command ```file PATH_TO_TARGET_APPLICATION```
   3. Take note of the output, you need this information for the next step.
 2. Build C++ bootstrap library ```pempo/Bootstrap/``` for target application architecture
-  * Change the CMake variable ```ARCHITECTURE``` in [CMakeLists.txt](Bootstrap/CMakeLists.txt).
+  * Change the CMake variable ```ARCHITECTURE``` in [CMakeLists.txt](Bootstrap/CMakeLists.txt) to match your target application. (i386 or x86_64)
   * For information on how to build source code with CMake see [Running CMake](http://www.cmake.org/runningcmake/).
   * Note: The CMake build will also build ```osxinj``` via XCode.
 3. Build Mono library ```pempo/MonoMagic```
