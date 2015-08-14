@@ -5,7 +5,6 @@
 How to:
 
 1. Determine architecture of target application via terminal```file PATH_TO_TARGET_APPLICATION```
-2. Build ```pempo``` for target application architecture
-  * Change the CMake variable ```ARCHITECTURE``` in [CMakeLists.txt](CMakeLists.txt) to match your target application. (i386 or x86_64)
+2. Build ```pempo``` for target application architecture by setting the CMake variable ```ARCHITECTURE``` to the desired value (either i386, x86_64, or ppc)
   * For information on how to build with CMake see [Running CMake](http://www.cmake.org/runningcmake/)
 4. Inject into target process via terminal ```sudo ./injector TARGET_PROCESS_NAME LIBRARY_PATH```
