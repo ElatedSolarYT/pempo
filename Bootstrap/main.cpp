@@ -47,7 +47,7 @@ void * EntryPoint(void * param_block)
 }
 
 // The entry point for the library when successfully injected into target process
-extern "C" void Bootstrap(ptrdiff_t code_offset, void * param_block, size_t param_size, void * dummy_pthread_data)
+void Bootstrap(ptrdiff_t code_offset, void * param_block, size_t param_size, void * dummy_pthread_data)
 {
     __pthread_set_self(dummy_pthread_data);
 
@@ -68,4 +68,16 @@ extern "C" void Bootstrap(ptrdiff_t code_offset, void * param_block, size_t para
     pthread_attr_destroy(&thread_attributes);
 
     thread_suspend(mach_thread_self());
+}
+
+void UserNotificationDisplayNotice(const char * header, const char * message, int type)
+{
+    CFStringRef header_cfstringref = CFStringCreateWithCString(NULL, header, (CFStringEncoding)strlen(header));
+    CFStringRef message_cfstringref = CFStringCreateWithCString(NULL, message, (CFStringEncoding)strlen(message));
+
+    CFUserNotificationDisplayNotice(0, (CFOptionFlags)type, nullptr, nullptr, nullptr, header_cfstringref,
+                                    message_cfstringref, NULL);
+
+    CFRelease(header_cfstringref);
+    CFRelease(message_cfstringref);
 }
