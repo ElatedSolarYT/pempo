@@ -1,6 +1,6 @@
 # pempo
 
-```pempo``` is a Mac OS X game injector & hack tool. It uses [osxinj](https://github.com/scen/osxinj) to inject C/C++ dynamic library (.dylib) into a target process. The dynamic library [embeds Mono](http://www.mono-project.com/docs/advanced/embedding/) then loads a Mono library (.dll).
+```pempo``` is a Mac OS X game injector tool. It uses [mach_inject](https://github.com/rentzsch/mach_inject) to inject a C/C++ dynamic library (.dylib) into a target process. A bootstrap C++ dynamic library is provided for injecting Mono dynamic linked librarys (.dll). This is accomplished by [embedding Mono](http://www.mono-project.com/docs/advanced/embedding/) into the target process.
 
 How to:
 
@@ -10,9 +10,8 @@ How to:
   3. Take note of the output, you need this information for the next step.
 2. Build ```pempo``` for target application architecture
   * Change the CMake variable ```ARCHITECTURE``` in [CMakeLists.txt](CMakeLists.txt) to match your target application. (i386 or x86_64)
-  * For information on how to build with CMake see [Running CMake](http://www.cmake.org/runningcmake/).
-  * Note: The CMake build will also build ```osxinj``` via XCode and ```pempo/MonoLibrary``` via Mono. As such, XCode and Mono need to be installed; see [XCode in App Store](https://itunes.apple.com/us/app/xcode/id497799835?ls=1&mt=12) and [Install Mono on Mac OS X](http://www.mono-project.com/docs/getting-started/install/mac/) 
+  * For information on how to build with CMake see [Running CMake](http://www.cmake.org/runningcmake/)
 4. Inject into target process
   1. Open up [Terminal](https://en.wikipedia.org/wiki/Terminal_(OS_X)).
   2. Change directory to the bin folder with the configuration you built for: ```cd pempo/bin/debug```
-  3. Inject into target process via ```sudo ./osxinj TARGET_PROCESS_NAME libpempo.dylib```
+  3. Inject into target process via ```sudo ./injector TARGET_PROCESS_NAME LIBRARY_PATH```
