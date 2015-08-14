@@ -2,7 +2,7 @@
 
 ```pempo``` is a Mac OS X injector tool. It uses [mach_inject](https://github.com/rentzsch/mach_inject) to inject a C/C++ dynamic library (.dylib) into a target process. A bootstrap C++ dynamic library is provided for injecting Mono dynamic linked libraries (.dll). This is accomplished by [embedding Mono](http://www.mono-project.com/docs/advanced/embedding/) into the target process.
 
-## Screenshot
+## Screenshots
 
 ![League of Legends](/screenshots/leagueoflegends.png?raw=true "League of Legends")
 
