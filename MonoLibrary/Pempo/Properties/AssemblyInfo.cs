@@ -12,7 +12,7 @@ using Pempo;
 [assembly: AssemblyCopyright ("")]
 [assembly: AssemblyTrademark ("")]
 [assembly: AssemblyCulture ("")]
-[assembly: EntryPointAttribute("Pempo.Program:EntryPoint()")]
+[assembly: AssemblyEntryPoint("Pempo.Program:EntryPoint()")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,

@@ -31,7 +31,7 @@ void EntryPoint(const std::string mono_assembly_path)
     }
 
     // Get the Mono class for EntryPointAttribute from the Mono assembly
-    MonoClass * entry_point_attribute_class = mono_class_from_name(mono_image, "Pempo", "EntryPointAttribute");
+    MonoClass * entry_point_attribute_class = mono_class_from_name(mono_image, "Pempo", "AssemblyEntryPointAttribute");
 
     // Get (alloc) all attributes for the Mono assembly
     MonoCustomAttrInfo * assembly_attributes = mono_custom_attrs_from_assembly(mono_assembly);
@@ -68,7 +68,7 @@ void EntryPoint(const std::string mono_assembly_path)
 
     if (entry_point_method_desc == nullptr)
     {
-        fprintf(stderr, "Error: Could not find 'Pempo.EntryPointAttribute' on the Mono assembly '%s'\n",
+        fprintf(stderr, "Error: Could not find 'Pempo.AssemblyEntryPointAttribute' on the Mono assembly '%s'\n",
                 mono_assembly_path.c_str());
         exit(EXIT_FAILURE);
     }

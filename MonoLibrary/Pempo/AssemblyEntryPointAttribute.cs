@@ -3,11 +3,11 @@
 namespace Pempo
 {
 	[AttributeUsage(AttributeTargets.Assembly)]
-	public class EntryPointAttribute : Attribute
+	public class AssemblyEntryPointAttribute : Attribute
 	{
 		public string EntryPointMethod { get; private set;}
 
-		public EntryPointAttribute(string entryPointMethod)
+		public AssemblyEntryPointAttribute(string entryPointMethod)
 		{
 			EntryPointMethod = entryPointMethod;
 		}
