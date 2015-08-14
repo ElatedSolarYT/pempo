@@ -1,62 +1,71 @@
 #include "main.h"
 
-// The entry point for the library when successfully injected into target process
-// The attribute is for osxinj to find our function
-__attribute__((constructor))
-void EntryPoint()
+void * EntryPoint(void * param_block)
 {
-    //TODO: Check if a Mono domain already exists in injected process.
+    std::string param = (char *)param_block;
 
-    // Initialize Mono and create a Mono domain
-    MonoDomain * domain = mono_jit_init_version("pempo", "v4.0.30319");
-    // Set Mono directories from CMake configuration
-    mono_set_dirs(TOSTRING(MONO_LIB_DIRECTORY), TOSTRING(MONO_ETC_DIRECTORY));
+    std::string dynamic_library_path = "";
+    std::string mono_library_path = "";
 
-    // Hard code the Mono assembly file to load
-    const char * assembly_file = "pempo.dll";
-
-    // Open Mono assembly
-    MonoAssembly * mono_assembly = mono_domain_assembly_open(domain, assembly_file);
-    if (mono_assembly == nullptr)
+    size_t split_index = param.find(":");
+    if (split_index != std::string::npos)
     {
-        printf("Could not open mono assembly '%s'.\n", assembly_file);
-        exit(EXIT_FAILURE);
+        dynamic_library_path = param.substr(0, split_index);
+        mono_library_path = param.substr(split_index + 1, param.size() - split_index);
     }
     else
     {
-        printf("Opened mono assembly '%s'.\n", assembly_file);
+        dynamic_library_path = param;
     }
 
-    // Get the Mono image (the actual Mono code) for the Mono assembly
-    MonoImage * mono_image = mono_assembly_get_image(mono_assembly);
-    if (mono_image == nullptr)
+    void * module = dlopen(dynamic_library_path.c_str(), RTLD_NOW);
+
+    printf("Dynamic library '%s': %p\n", dynamic_library_path.c_str(), module);
+
+    if (module == nullptr)
     {
-        printf("Could not get Mono image of Mono assembly '%s'.\n", assembly_file);
+        fprintf(stderr, "Error: %s\n", dlerror());
         exit(EXIT_FAILURE);
     }
-    else
+
+    if (mono_library_path.size() > 0)
     {
-        printf("Got Mono image of Mono assembly '%s'.\n", assembly_file);
+        void * module_entry_point = dlsym(module, "EntryPoint");
+
+        printf("Dynamic library '%s': Function '%s': %p\n", dynamic_library_path.c_str(), "EntryPoint", module_entry_point);
+
+        if (module_entry_point == nullptr)
+        {
+            fprintf(stderr, "Error: %s\n", dlerror());
+            exit(EXIT_FAILURE);
+        }
+
+        ((void(*)(const std::string)) module_entry_point)(mono_library_path);
     }
 
-    // Hard code name of the static method to invoke
-    const char * entry_point_method_desc = "Pempo.Program:EntryPoint()";
+    return 0;
+}
 
-    // Get a Mono method description of name (just a data structure that parses the namespace and method name)
-    MonoMethodDesc * pempo_entry_point_method_desc = mono_method_desc_new(entry_point_method_desc, true);
+// The entry point for the library when successfully injected into target process
+extern "C" void Bootstrap(ptrdiff_t code_offset, void * param_block, size_t param_size, void * dummy_pthread_data)
+{
+    __pthread_set_self(dummy_pthread_data);
 
-    // Search for the Mono method in the Mono image
-    MonoMethod * mono_entry_point_method = mono_method_desc_search_in_image(pempo_entry_point_method_desc, mono_image);
-    if (mono_entry_point_method == nullptr)
-    {
-        printf("Could not find Mono method '%s' in Mono assembly '%s'.\n", entry_point_method_desc, assembly_file);
-        exit(EXIT_FAILURE);
-    }
-    else
-    {
-        printf("Found Mono method '%s' in Mono assembly '%s'.\n", entry_point_method_desc, assembly_file);
-    }
+    pthread_attr_t thread_attributes;
+    pthread_attr_init(&thread_attributes);
 
-    // Invoke Mono method
-    mono_runtime_invoke(mono_entry_point_method, nullptr, nullptr, nullptr);
+    int policy;
+    pthread_attr_getschedpolicy(&thread_attributes, &policy);
+    pthread_attr_setdetachstate(&thread_attributes, PTHREAD_CREATE_DETACHED);
+    pthread_attr_setinheritsched(&thread_attributes, PTHREAD_EXPLICIT_SCHED);
+
+    struct sched_param schedule;
+    schedule.sched_priority = sched_get_priority_max(policy);
+    pthread_attr_setschedparam(&thread_attributes, &schedule);
+
+    pthread_t thread;
+    pthread_create(&thread, &thread_attributes, (void * (*)(void *)) ((long)EntryPoint), param_block);
+    pthread_attr_destroy(&thread_attributes);
+
+    thread_suspend(mach_thread_self());
 }

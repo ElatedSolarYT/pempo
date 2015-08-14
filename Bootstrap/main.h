@@ -3,17 +3,17 @@
 // Included header files
 
 #include <string>
+#include <regex>
+#include <string>
+#include <vector>
 #include <stdlib.h>
 #include <dlfcn.h>
 #include <mach/error.h>
-#include <mach_override.h>
-#include <mono/jit/jit.h>
-#include <mono/metadata/assembly.h>
-#include <mono/metadata/debug-helpers.h>
-#include "cmake_vars_generated.h"
+#include <mach/mach_init.h>
+#include <pthread.h>
+#include <mach/mach.h>
+#include <mach/thread_act.h>
+#include <mach/mach_init.h>
 
-// Preprocessor macro to convert string preprocessor definitions into C strings
-
-#define STRINGIFY(x) #x
-#define TOSTRING(x) STRINGIFY(x)
-#define AT __FILE__ ":" TOSTRING(__LINE__)
+// External symbols
+extern "C" void __pthread_set_self(void *);
