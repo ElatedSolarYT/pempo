@@ -18,3 +18,6 @@
 
 // External symbols
 extern "C" void EntryPoint(const std::string mono_assembly_path);
+
+#define STRINGIFY(x) #x
+#define TOSTRING(x) STRINGIFY(x)
