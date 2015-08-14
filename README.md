@@ -15,6 +15,7 @@ Any Mono dynamic link library can be injected into a target process as long as t
 
 1. The code [AssemblyEntryPointAttribute.cs](MonoLibrary/Pempo/AssemblyEntryPointAttribute.cs) is included **as is** in your Mono library. 
 2. An ```AssemblyEntryPoint``` attribute is applied to the library's ```AssemblyInfo.cs``` with a string representing the static method you wish to be the entry point of the injected code. For an example see [AssemblyInfo.cs](MonoLibrary/Pempo/Properties/AssemblyInfo.cs)
+3. For i386 architecture, Mono is by default not installed in standard setups and will need to be installed. See (Compiling Mono on Mac OS X)[http://www.mono-project.com/docs/compiling-mono/mac/]. I used the prefix ```/opt/mono/```, but feel free to use any prefix and update [MonoBootstrap/CMakeLists.txt](MonoBootstrap/CMakeLists.txt) for your machine.
 
 ## License
 
