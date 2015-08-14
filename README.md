@@ -11,7 +11,4 @@ How to:
 2. Build ```pempo``` for target application architecture
   * Change the CMake variable ```ARCHITECTURE``` in [CMakeLists.txt](CMakeLists.txt) to match your target application. (i386 or x86_64)
   * For information on how to build with CMake see [Running CMake](http://www.cmake.org/runningcmake/)
-4. Inject into target process
-  1. Open up [Terminal](https://en.wikipedia.org/wiki/Terminal_(OS_X)).
-  2. Change directory to the bin folder with the configuration you built for: ```cd pempo/bin/debug```
-  3. Inject into target process via ```sudo ./injector TARGET_PROCESS_NAME LIBRARY_PATH```
+4. Inject into target process via terminal ```sudo ./injector TARGET_PROCESS_NAME LIBRARY_PATH```
