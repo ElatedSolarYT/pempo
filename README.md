@@ -4,7 +4,7 @@
 
 ## Screenshot
 
-![League of Legends](/screenshots/leagueoflegends.jpg?raw=true "League of Legends")
+![League of Legends](/screenshots/leagueoflegends.png?raw=true "League of Legends")
 
 ## How to Inject
 
