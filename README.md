@@ -14,7 +14,7 @@
 Any Mono dynamic link library can be injected into a target process as long as the following conditions are met:
 
 1. The code [AssemblyEntryPointAttribute.cs](MonoLibrary/Pempo/AssemblyEntryPointAttribute.cs) is included **as is** in your Mono library. 
-2. An ```AssemblyEntryPoint``` attribute is applied to the library's ```AssemblyInfo.cs``` with a string representing the static method you wish to be entry point of the injected code. For an example see [AssemblyInfo.cs](MonoLibrary/Pempo/Properties/AssemblyInfo.cs)
+2. An ```AssemblyEntryPoint``` attribute is applied to the library's ```AssemblyInfo.cs``` with a string representing the static method you wish to be the entry point of the injected code. For an example see [AssemblyInfo.cs](MonoLibrary/Pempo/Properties/AssemblyInfo.cs)
 
 ## License
 
