@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.2)
 ###############################################
 ###             CONFIGURATION               ###
 ###############################################
-set(ARCHITECTURE "x86_64")
+set(ARCHITECTURE "i386")
 ###############################################
 
 set(OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE})
