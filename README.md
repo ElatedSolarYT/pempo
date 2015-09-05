@@ -6,12 +6,14 @@
 
 ![League of Legends](/screenshots/leagueoflegends.png?raw=true "League of Legends")
 
+## How to build
+1. Build Mono for i386 architecture. See [Compiling Mono on Mac OS X](http://www.mono-project.com/docs/compiling-mono/mac/). I used the prefix ```/opt/mono/```, but feel free to use any prefix and update [MonoBootstrap/CMakeLists.txt](MonoBootstrap/CMakeLists.txt) for your machine.
+2. Build Pempo. See [Running CMake](http://www.cmake.org/runningcmake/)
+
 ## How to Inject
 
-1. Determine architecture of target application: ```file PATH_TO_TARGET_APPLICATION```
-2. Build ```pempo``` for target application architecture by setting the CMake variable ```ARCHITECTURE``` to the desired value (either i386 or x86_64)
-  * For information on how to build with CMake see [Running CMake](http://www.cmake.org/runningcmake/)
-4. Inject into target process: ```sudo ./injector TARGET_PROCESS_NAME LIBRARY_PATH```
+1. Determine architecture of target application: ```file PATH_TO_TARGET_APPLICATION``` (should be i386 or x86_64)
+2. Inject into target process: ```sudo arch ARCHITECTURE ./injector TARGET_PROCESS_NAME LIBRARY_PATH```
 
 ### Mono
 
@@ -19,7 +21,6 @@ Any Mono dynamic link library can be injected into a target process as long as t
 
 1. The code [AssemblyEntryPointAttribute.cs](MonoLibrary/Pempo/AssemblyEntryPointAttribute.cs) is included **as is** in your Mono library. 
 2. An ```AssemblyEntryPoint``` attribute is applied to the library's ```AssemblyInfo.cs``` with a string representing the static method you wish to be the entry point of the injected code. For an example see [AssemblyInfo.cs](MonoLibrary/Pempo/Properties/AssemblyInfo.cs)
-3. For i386 architecture, Mono is by default not installed in standard setups and will need to be installed. See [Compiling Mono on Mac OS X](http://www.mono-project.com/docs/compiling-mono/mac/). I used the prefix ```/opt/mono/```, but feel free to use any prefix and update [MonoBootstrap/CMakeLists.txt](MonoBootstrap/CMakeLists.txt) for your machine.
 
 ## License
 
@@ -27,4 +28,4 @@ The MIT License (MIT)
 
 Copyright (c) 2015 Lucas Girouard-Stranks (Alias: LithiumToast)
 
-See the full [license file](LICENSE) for pempo
+See the full [license file](LICENSE)
