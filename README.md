@@ -5,6 +5,7 @@
 ## Screenshots
 
 ![League of Legends](/screenshots/leagueoflegends.png?raw=true "League of Legends")
+![GLEssentials](/screenshots/GLEssentials.png?raw=true "GLEssentials")
 
 ## How to build
 1. Build Mono for i386 architecture. See [Compiling Mono on Mac OS X](http://www.mono-project.com/docs/compiling-mono/mac/). I used the prefix ```/opt/mono/```, but feel free to use any prefix and update [MonoBootstrap/CMakeLists.txt](MonoBootstrap/CMakeLists.txt) for your machine.
