@@ -1,6 +1,74 @@
 #include <mach/mach_error.h>
 #include "main.h"
 
+pid_t GetProcessByName(std::string name)
+{
+    int process_count = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
+    pid_t process_ids[1024];
+    memset(process_ids, 0, sizeof process_ids);
+    proc_listpids(PROC_ALL_PIDS, 0, process_ids, sizeof(process_ids));
+
+    for (int i = 0; i < process_count; i++)
+    {
+        if (!process_ids[i])
+        {
+            continue;
+        }
+
+        char process_path[PROC_PIDPATHINFO_MAXSIZE];
+        char process_name[PROC_PIDPATHINFO_MAXSIZE];
+
+        memset(process_path, 0, sizeof process_path);
+        proc_pidpath(process_ids[i], process_path, sizeof process_path);
+
+        int process_path_length = strlen(process_path);
+        if (process_path_length > 0)
+        {
+            int position = process_path_length;
+            while (position && process_path[position] != '/')
+            {
+                --position;
+            }
+
+            strcpy(process_name, process_path + position + 1);
+            if (!strcmp(process_name, name.c_str()))
+            {
+                return process_ids[i];
+            }
+        }
+    }
+
+    return 0;
+}
+
+bool string_has_suffix(const std::string &str, const std::string &suffix)
+{
+    return str.size() >= suffix.size() &&
+           str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
+}
+
+std::string execute_command(std::string command)
+{
+    FILE * pipe = popen(command.c_str(), "r");
+    if (!pipe)
+    {
+        return "";
+    }
+
+    char buffer[128];
+    std::string result = "";
+    while(!feof(pipe))
+    {
+        if(fgets(buffer, 128, pipe) != NULL)
+        {
+            result += buffer;
+        }
+    }
+
+    pclose(pipe);
+    return result;
+}
+
 // Main injector program
 int main(int argc, char * argv[])
 {
@@ -13,6 +81,7 @@ int main(int argc, char * argv[])
 
     // Find the process ID by name
     pid_t pid = GetProcessByName(argv[1]);
+
     if (pid == 0)
     {
         fprintf(stderr, "Process '%s' not found\n", argv[1]);
@@ -63,7 +132,19 @@ int main(int argc, char * argv[])
     std::string param = path;
     if (string_has_suffix(param, ".dll"))
     {
-        realpath("libmonobootstrap.dylib", path);
+        size_t pointer_size = sizeof(int *);
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "OCDFAInspection"
+        if (pointer_size == 4)
+        {
+            realpath("libmonobootstrap_i386.dylib", path);
+        }
+        else if (pointer_size == 8)
+        {
+            realpath("libmonobootstrap_x86_64.dylib", path);
+        }
+#pragma clang diagnostic pop
+
         param = std::string(path) + ":" + param;
     }
 
@@ -77,50 +158,4 @@ int main(int argc, char * argv[])
     }
 
     exit(EXIT_SUCCESS);
-}
-
-pid_t GetProcessByName(const char * name)
-{
-    int process_count = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
-    pid_t process_ids[1024];
-    memset(process_ids, 0, sizeof process_ids);
-    proc_listpids(PROC_ALL_PIDS, 0, process_ids, sizeof(process_ids));
-
-    for (int i = 0; i < process_count; i++)
-    {
-        if (!process_ids[i])
-        {
-            continue;
-        }
-
-        char process_path[PROC_PIDPATHINFO_MAXSIZE];
-        char process_name[PROC_PIDPATHINFO_MAXSIZE];
-
-        memset(process_path, 0, sizeof process_path);
-        proc_pidpath(process_ids[i], process_path, sizeof process_path);
-
-        int process_path_length = strlen(process_path);
-        if (process_path_length > 0)
-        {
-            int position = process_path_length;
-            while (position && process_path[position] != '/')
-            {
-                --position;
-            }
-
-            strcpy(process_name, process_path + position + 1);
-            if (!strcmp(process_name, name))
-            {
-                return process_ids[i];
-            }
-        }
-    }
-
-    return 0;
-}
-
-bool string_has_suffix(const std::string &str, const std::string &suffix)
-{
-    return str.size() >= suffix.size() &&
-           str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
 }

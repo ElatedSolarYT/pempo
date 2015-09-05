@@ -2,25 +2,28 @@
 
 void * EntryPoint(void * param_block)
 {
-    std::string param = (char *)param_block;
+    char * param = (char *) param_block;
 
-    std::string dynamic_library_path = "";
-    std::string mono_library_path = "";
+    char * dynamic_library_path = nullptr;
+    char * mono_library_path = nullptr;
 
-    size_t split_index = param.find(":");
-    if (split_index != std::string::npos)
+    char * pointer_char = strchr(param, ':');
+    if (pointer_char != nullptr)
     {
-        dynamic_library_path = param.substr(0, split_index);
-        mono_library_path = param.substr(split_index + 1, param.size() - split_index);
+        size_t index = pointer_char - param;
+        mono_library_path = pointer_char + 1;
+        dynamic_library_path = (char *)malloc(sizeof(char) * (index));
+        strncpy(dynamic_library_path, param, index);
+        dynamic_library_path[index] = '\0';
     }
     else
     {
         dynamic_library_path = param;
     }
 
-    void * module = dlopen(dynamic_library_path.c_str(), RTLD_NOW);
+    void * module = dlopen(dynamic_library_path, RTLD_NOW);
 
-    printf("Dynamic library '%s': %p\n", dynamic_library_path.c_str(), module);
+    printf("Dynamic library '%s': %p\n", dynamic_library_path, module);
 
     if (module == nullptr)
     {
@@ -28,11 +31,11 @@ void * EntryPoint(void * param_block)
         exit(EXIT_FAILURE);
     }
 
-    if (mono_library_path.size() > 0)
+    if (mono_library_path != nullptr)
     {
         void * module_entry_point = dlsym(module, "EntryPoint");
 
-        printf("Dynamic library '%s': Function '%s': %p\n", dynamic_library_path.c_str(), "EntryPoint", module_entry_point);
+        printf("Dynamic library '%s': Function '%s': %p\n", dynamic_library_path, "EntryPoint", module_entry_point);
 
         if (module_entry_point == nullptr)
         {

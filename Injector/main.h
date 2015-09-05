@@ -16,8 +16,3 @@
 #include <mach/error.h>
 #include <libproc.h>
 #include "mach_inject.h"
-
-// Included functions
-
-pid_t GetProcessByName(const char * name);
-bool string_has_suffix(const std::string &str, const std::string &suffix);

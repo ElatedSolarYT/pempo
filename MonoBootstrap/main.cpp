@@ -1,4 +1,3 @@
-#include <mono/metadata/reflection.h>
 #include "main.h"
 
 // The entry point for Mono bootstrap

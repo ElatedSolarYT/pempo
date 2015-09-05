@@ -1,17 +1,18 @@
 cmake_minimum_required(VERSION 3.2)
 
-###############################################
-###             CONFIGURATION               ###
-###############################################
-set(ARCHITECTURE "i386")
-###############################################
-
 set(OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/bin/${CMAKE_BUILD_TYPE})
 set(EXT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/ext)
-set(CMAKE_OSX_ARCHITECTURES ${ARCHITECTURE})
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+#set(ARCHITECTURE_X86 "i386")
+#set(ARCHITECTURE_X86_64 "x86_64")
+#set(CMAKE_CXX_FLAGS_X86 "${CMAKE_CXX_FLAGS} -m32 -std=c++11")
+#set(CMAKE_C_FLAGS_X86 "${CMAKE_C_FLAGS} -m32 -std=c++11")
+#set(CMAKE_CXX_FLAGS_X86_64 "${CMAKE_CXX_FLAGS} -m64 -std=c++11")
+#set(CMAKE_C_FLAGS_X86_64 "${CMAKE_C_FLAGS} -m64 -std=c++11")
+
+set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
 
 # build mono library via mono
 add_custom_command(

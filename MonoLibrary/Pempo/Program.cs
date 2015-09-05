@@ -5,7 +5,7 @@ namespace Pempo
 {
 	public static class Program
 	{
-		public enum UserNotificationLevel: int 
+		public enum UserNotificationLevel: int
 		{
 			Stop = 0,
 			Alert = 1,
