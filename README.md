@@ -8,7 +8,7 @@
 ![GLEssentials](/screenshots/GLEssentials.png?raw=true "GLEssentials")
 
 ## How to build
-1. Build Mono for i386 architecture. See [Compiling Mono on Mac OS X](http://www.mono-project.com/docs/compiling-mono/mac/). I used the prefix ```/opt/mono/```, but feel free to use any prefix and update [MonoBootstrap/CMakeLists.txt](MonoBootstrap/CMakeLists.txt) for your machine.
+1. Download and install [Mono Universal Installer](http://www.mono-project.com/download/).
 2. Build Pempo. See [Running CMake](http://www.cmake.org/runningcmake/)
 
 ## How to Inject
@@ -20,8 +20,8 @@
 
 Any Mono dynamic link library can be injected into a target process as long as the following conditions are met:
 
-1. The code [AssemblyEntryPointAttribute.cs](MonoLibrary/Pempo/AssemblyEntryPointAttribute.cs) is included **as is** in your Mono library. 
-2. An ```AssemblyEntryPoint``` attribute is applied to the library's ```AssemblyInfo.cs``` with a string representing the static method you wish to be the entry point of the injected code. For an example see [AssemblyInfo.cs](MonoLibrary/Pempo/Properties/AssemblyInfo.cs)
+1. The code [AssemblyEntryPointAttribute.cs](src/MonoTestLibrary/MonoTestLibrary/AssemblyEntryPointAttribute.cs) is included **as is** in your Mono library. 
+2. An ```AssemblyEntryPoint``` attribute is applied to the library's ```AssemblyInfo.cs``` with a string representing the static method you wish to be the entry point of the injected code. For an example see [AssemblyInfo.cs](src/MonoTestLibrary/MonoTestLibrary/Properties/AssemblyInfo.cs)
 
 ## License
 
