@@ -9,5 +9,5 @@ set(SOURCE_FILES
 
 set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
 
-add_library(bootstrap SHARED ${SOURCE_FILES})
-target_link_libraries(bootstrap ${APP_SERVICES_LIBRARY} ${COCOA_LIBRARY})
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+target_link_libraries(${PROJECT_NAME} ${APP_SERVICES_LIBRARY} ${COCOA_LIBRARY})
