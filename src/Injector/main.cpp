@@ -1,4 +1,3 @@
-#include <mach/mach_error.h>
 #include "main.h"
 
 pid_t GetProcessByName(const char *process_name)
