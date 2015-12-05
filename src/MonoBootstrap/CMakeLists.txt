@@ -10,7 +10,8 @@ set(SOURCE_FILES
 set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
+find_library(COREFOUNDATION_FRAMEWORK CoreFoundation)
 find_library(MONO_FRAMEWORK Mono)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${MONO_FRAMEWORK}/Headers/mono-2.0)
-target_link_libraries(${PROJECT_NAME} ${MONO_FRAMEWORK}/Libraries/libmonosgen-2.0.dylib -lpthread -liconv -lobjc)
+target_link_libraries(${PROJECT_NAME} ${COREFOUNDATION_FRAMEWORK} ${MONO_FRAMEWORK}/Libraries/libmonosgen-2.0.dylib -lpthread -liconv -lobjc)
