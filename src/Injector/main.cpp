@@ -95,9 +95,10 @@ int main(int argc, char *argv[])
 	realpath(argv[2], library_path);
 
 	char mach_inject_parameter[PATH_MAX];
-	strncpy(mach_inject_parameter, library_path, strlen(library_path));
 
-	char *token = strtok(library_path, ".");
+	char tokenize[PATH_MAX];
+	strcpy(tokenize, library_path);
+	char *token = strtok(tokenize, ".");
 	char *last_token = nullptr;
 	while (token != NULL)
 	{
@@ -112,7 +113,7 @@ int main(int argc, char *argv[])
 		realpath(mono_bootstrap_library_path, dynamic_library_path);
 		strncpy(mach_inject_parameter, dynamic_library_path, strlen(dynamic_library_path));
 		strcat(mach_inject_parameter, ":");
-		strcat(mach_inject_parameter, library_path);
+		strncat(mach_inject_parameter, library_path, strlen(library_path));
 	}
 	else
 	{
