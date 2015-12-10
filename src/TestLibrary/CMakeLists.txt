@@ -7,5 +7,4 @@ set(SOURCE_FILES
 set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
-set_target_properties(${PROJECT_NAME} PROPERTIES VERSION 1.0)
 target_link_libraries(${PROJECT_NAME})
